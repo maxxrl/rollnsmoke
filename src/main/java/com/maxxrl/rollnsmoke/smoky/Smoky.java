@@ -1,13 +1,15 @@
 package com.maxxrl.rollnsmoke.smoky;
 
+import com.maxxrl.rollnsmoke.track.Track;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
-@Table(schema = "t_smoky")
+@Table(name = "t_smoky")
 public class Smoky {
 
     @Id
@@ -15,7 +17,8 @@ public class Smoky {
     private Long id;
     private String name;
     private LocalDate rolledDate;
-    private int smokeCount;
 
+    @OneToMany(mappedBy = "smoky")
+    private List<Track> tracks;
 
 }
