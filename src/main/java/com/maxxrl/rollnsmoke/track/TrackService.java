@@ -13,13 +13,10 @@ public class TrackService {
 
     private final TrackRepository trackRepository;
 
-    public Track addTrack(final String name) {
+    public Track addTrack(final Smoky smoky) {
         Track track = new Track();
-        Smoky smoky = new Smoky();
-        final LocalDate rolledDate = LocalDate.now();
-        smoky.setName(name);
-        smoky.setRolledDate(rolledDate);
         track.setSmoky(smoky);
+        track.setSmokeDate(LocalDate.now());
         trackRepository.save(track);
         return track;
     }

@@ -1,5 +1,6 @@
 package com.maxxrl.rollnsmoke.track;
 
+import com.maxxrl.rollnsmoke.smokytracker.SmokyTrackerFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.List;
 public class TrackController {
 
     private final TrackService trackService;
+    private final SmokyTrackerFacade smokyTrackerFacade;
 
     @GetMapping("/")
     public List<Track> allTracks() {
@@ -22,14 +24,15 @@ public class TrackController {
         return trackService.getTrack(id);
     }
 
-    @PostMapping("/")
-    public Track addTrack(@RequestBody final String name) {
-        return trackService.addTrack(name);
-    }
 
     @DeleteMapping("/{id}")
     public void deleteTrack(@PathVariable final Long id) {
         trackService.deleteTrack(id);
+    }
+
+    @PostMapping("/{id}")
+    public Track addSmokyToTrack(@RequestBody final String name, @PathVariable final Long id) {
+        return smokyTrackerFacade.addSmokyToTrack(name, id);
     }
 
 

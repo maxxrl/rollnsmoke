@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -17,10 +18,17 @@ public class Smoky {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private LocalDate rolledDate;
+    private LocalDateTime rolledDate;
+    private SmokyState state;
+    private LocalDateTime lastSmoked;
 
     @JsonIgnore
     @OneToMany(mappedBy = "smoky")
     private List<Track> tracks;
+
+    @PrePersist
+    public void prePersist(){
+        state = SmokyState.ROLLED;
+    }
 
 }
