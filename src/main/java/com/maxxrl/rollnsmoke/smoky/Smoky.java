@@ -1,5 +1,6 @@
 package com.maxxrl.rollnsmoke.smoky;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.maxxrl.rollnsmoke.track.Track;
 import lombok.Data;
 
@@ -18,6 +19,7 @@ public class Smoky {
     private String name;
     private LocalDate rolledDate;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "smoky")
     private List<Track> tracks;
 

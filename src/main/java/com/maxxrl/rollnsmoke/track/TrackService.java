@@ -2,7 +2,6 @@ package com.maxxrl.rollnsmoke.track;
 
 import com.maxxrl.rollnsmoke.smoky.Smoky;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,7 +11,7 @@ import java.util.List;
 @Service
 public class TrackService {
 
-    private TrackRepository trackRepository;
+    private final TrackRepository trackRepository;
 
     public Track addTrack(final String name) {
         Track track = new Track();
@@ -21,11 +20,16 @@ public class TrackService {
         smoky.setName(name);
         smoky.setRolledDate(rolledDate);
         track.setSmoky(smoky);
+        trackRepository.save(track);
         return track;
     }
 
     public void deleteTrack(final Long id) {
-        trackRepository.deleteById(id);
+        try {
+            trackRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new TrackNotFoundException("Could not find track with id " + id);
+        }
     }
 
     public List<Track> getTracks() {
@@ -33,7 +37,7 @@ public class TrackService {
     }
 
     public Track getTrack(final Long id) {
-        return trackRepository.findById(id).orElse(null);
+        return trackRepository.findById(id).orElseThrow(() -> new TrackNotFoundException("Could not find track with id " + id));
     }
 
 }

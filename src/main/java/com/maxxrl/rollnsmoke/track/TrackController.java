@@ -23,7 +23,7 @@ public class TrackController {
     }
 
     @PostMapping("/")
-    public Track addTrack(final String name) {
+    public Track addTrack(@RequestBody final String name) {
         return trackService.addTrack(name);
     }
 
